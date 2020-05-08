@@ -2,8 +2,10 @@ package com.iota.sync.service.scheduler.jobs
 
 import android.app.job.JobParameters
 import android.app.job.JobService
+import com.iota.sync.service.binder.ListenerService
 import com.iota.sync.service.metric.IMetric
 import com.iota.sync.service.metric.battery.AbstractBatteryMetric
+import com.iota.sync.service.metric.network.AbstractNetworkMetric
 import org.koin.android.ext.android.inject
 
 /**
@@ -17,15 +19,24 @@ class SyncStateTask : JobService() {
     init {
         metrics.apply {
             val batteryMetric: AbstractBatteryMetric by inject()
-            add(batteryMetric)
+            metrics.add(batteryMetric)
+
+            val networkMetric: AbstractNetworkMetric by inject()
+            metrics.add(networkMetric)
         }
     }
 
     override fun onStopJob(params: JobParameters?): Boolean {
-        TODO("Not yet implemented")
+        jobFinished(params, true)
+
+        return true
     }
 
     override fun onStartJob(params: JobParameters?): Boolean {
-        TODO("Not yet implemented")
+        ListenerService.mqttClient.publishMessage("topic1", metrics.toString())
+
+        jobFinished(params, true)
+
+        return true
     }
 }

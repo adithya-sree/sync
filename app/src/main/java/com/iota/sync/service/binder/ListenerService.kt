@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.iota.sync.service.handler.IRequestHandler
+import com.iota.sync.service.metric.network.AbstractNetworkMetric
 import com.iota.sync.service.mqtt.IMQTTClient
 import com.iota.sync.service.scheduler.IScheduler
 import com.iota.sync.service.scheduler.jobs.RestartServiceJob
@@ -22,6 +23,7 @@ class ListenerService : Service() {
 
     private val scheduler: IScheduler by inject()
     private val handler: IRequestHandler by inject()
+    private val networkMetric: AbstractNetworkMetric by inject()
 
     override fun onBind(intent: Intent?): IBinder? {
         return handler.getBinder()
@@ -30,6 +32,7 @@ class ListenerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startup()
 
+        Log.d(TAG, "${networkMetric.getMetric()}")
         return super.onStartCommand(intent, flags, startId)
     }
 
