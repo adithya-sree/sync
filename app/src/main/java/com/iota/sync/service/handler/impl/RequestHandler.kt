@@ -17,7 +17,7 @@ class RequestHandler : Handler(), IRequestHandler {
     }
 
     override fun handlePublishMessage(msg: Message) {
-        MessageResponder.respond(msg.replyTo, Bundle())
+        TODO()
     }
 
     override fun routeRequest(msg: Message) {

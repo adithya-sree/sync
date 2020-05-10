@@ -2,6 +2,7 @@ package com.iota.sync.service.metric.network
 
 import android.net.ConnectivityManager
 import android.telephony.TelephonyManager
+import com.iota.sync.common.SyncConstants
 import com.iota.sync.service.metric.IMetric
 
 /**
@@ -24,17 +25,10 @@ abstract class AbstractNetworkMetric : IMetric {
 
     override fun getMetric(): HashMap<String, String> {
         return HashMap<String, String>().apply {
-            put(NETWORK_CONNECTED, isNetworkConnected().toString())
-            put(NETWORK_TYPE, getNetworkType())
-            put(NETWORK_STATUS, getNetworkStatus())
-            put(NETWORK_CARRIER, getNetworkCarrier())
+            put(SyncConstants.NETWORK_CONNECTED, isNetworkConnected().toString())
+            put(SyncConstants.NETWORK_TYPE, getNetworkType())
+            put(SyncConstants.NETWORK_STATUS, getNetworkStatus())
+            put(SyncConstants.NETWORK_CARRIER, getNetworkCarrier())
         }
-    }
-
-    companion object {
-        private const val NETWORK_TYPE = "network-type"
-        private const val NETWORK_CONNECTED = "network-connected"
-        private const val NETWORK_STATUS = "network-status"
-        private const val NETWORK_CARRIER = "network-carrier"
     }
 }

@@ -7,10 +7,12 @@ import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import com.iota.sync.service.handler.IRequestHandler
+import com.iota.sync.service.metric.location.AbstractLocationMetric
 import com.iota.sync.service.metric.network.AbstractNetworkMetric
 import com.iota.sync.service.mqtt.IMQTTClient
 import com.iota.sync.service.scheduler.IScheduler
 import com.iota.sync.service.scheduler.jobs.RestartServiceJob
+import com.iota.sync.service.scheduler.jobs.SyncStateTask
 import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -23,7 +25,6 @@ class ListenerService : Service() {
 
     private val scheduler: IScheduler by inject()
     private val handler: IRequestHandler by inject()
-    private val networkMetric: AbstractNetworkMetric by inject()
 
     override fun onBind(intent: Intent?): IBinder? {
         return handler.getBinder()
@@ -32,7 +33,8 @@ class ListenerService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startup()
 
-        Log.d(TAG, "${networkMetric.getMetric()}")
+        scheduler.scheduleJob(10000, SyncStateTask::class.java, 102)
+
         return super.onStartCommand(intent, flags, startId)
     }
 

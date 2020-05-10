@@ -7,7 +7,6 @@ import android.os.Build
 import android.telephony.TelephonyManager
 import com.iota.sync.service.metric.network.AbstractNetworkMetric
 
-
 /**
  * Created by Adithya S. on 05/08/2020
  */

@@ -2,8 +2,10 @@
   <dictionary name="exerdra">
     <words>
       <w>adithya</w>
+      <w>coords</w>
       <w>imqtt</w>
       <w>koin</w>
+      <w>lati</w>
       <w>mqtt</w>
       <w>paho</w>
     </words>
